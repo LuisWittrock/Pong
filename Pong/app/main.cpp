@@ -17,7 +17,7 @@ class Frame
         }
 };
 
-class Ball : Frame
+class Ball : Frame 
 {
     public:
         int xVelocity;
@@ -29,9 +29,12 @@ class Ball : Frame
 
         Ball()
         {
+            xPos = WINDOW_WIDTH/2-10;
+            yPos = WINDOW_WIDTH/2-10;
+                
             ballShape.setFillColor(sf::Color(100,250,50));
             ballShape.setRadius(20.f);
-            ballShape.setPosition(WINDOW_WIDTH/2-10, WINDOW_HEIGHT/2-10);
+            ballShape.setPosition(xPos, yPos);
             
             cout << "ball constructor";
         }
@@ -47,16 +50,22 @@ class Ball : Frame
 
 };
 
-class Paddle
+class Paddle : Frame
 {
     public:
         int xPos;
         int yPos;
         RectangleShape rectangleShape;
 
-        void drawPaddle()
+        Paddle()
         {
+            rectangleShape.setSize(Vector2f(10.f, 100.f));
+            rectangleShape.setFillColor(Color(0,0,255));
+        } 
 
+        RectangleShape getRectangleShape()
+        {
+            return rectangleShape;
         }
         void move()
         {
@@ -74,6 +83,7 @@ class Panel : Frame
         void redraw()
         {
            window.draw(ball.getBallshape());
+           window.draw(paddle1.getRectangleShape());
         }
 
         void move()
