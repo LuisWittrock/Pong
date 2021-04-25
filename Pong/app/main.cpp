@@ -67,6 +67,12 @@ class Paddle : Frame
         {
             return rectangleShape;
         }
+
+        void setPosition(int x, int y)
+        {
+            rectangleShape.setPosition(Vector2f(x,y));
+        }
+
         void move()
         {
 
@@ -76,14 +82,20 @@ class Paddle : Frame
 class Panel : Frame
 {
     public:
+        Ball ball;
         Paddle paddle1;
         Paddle paddle2;
-        Ball ball;
+        Panel()
+        {
+            paddle1.setPosition(50,50);
+            paddle2.setPosition(100,100);
+        }
 
         void redraw()
         {
            window.draw(ball.getBallshape());
            window.draw(paddle1.getRectangleShape());
+           window.draw(paddle2.getRectangleShape());
         }
 
         void move()
