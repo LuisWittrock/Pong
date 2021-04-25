@@ -1,4 +1,5 @@
 #include <SFML\Graphics.hpp>
+#include <SFML\System.hpp>
 #include <iostream>
 
 using namespace std;
@@ -9,11 +10,11 @@ class Frame
     public:
         RenderWindow window;
         Event event;
-        int WINDOW_WIDTH = 800;
+        int WINDOW_WIDTH = 1000;
         int WINDOW_HEIGHT = 600;
         Frame()
         {
-            window.setFramerateLimit(30);
+            window.setFramerateLimit(10);
         }
 };
 
@@ -83,6 +84,7 @@ class Panel : Frame
         Ball ball;
         Paddle paddle1;
         Paddle paddle2;
+
         Panel()
         {
             paddle1.setPosition(5,WINDOW_HEIGHT/2-50);
@@ -111,13 +113,33 @@ class Panel : Frame
         void checkCollision()
         {
             //bounce ball of paddle
+            if(ball.xPos <= 15 && ball.yPos >= paddle1.yPos - 30 && ball.yPos <= paddle1.yPos + 120) ball.xVelocity *= -1;
+
+            if((ball.xPos +30) >= (WINDOW_WIDTH - 20) && ball.yPos >= paddle2.yPos - 30 && ball.yPos <= paddle2.yPos + 120) ball.xVelocity *= -1; 
+
             //bounce ball of horizontal edge
-            if(ball.yPos <= 0) ball.yVelocity  *= -1;
-            if(ball.yPos >= WINDOW_HEIGHT - 10) ball.yVelocity  *= -1;
-            if(ball.xPos <= 0) ball.xVelocity *= -1;
-            if(ball.xPos >= WINDOW_WIDTH - 10) ball.xVelocity *= -1;
-            
-            //update score if hit vertical edge 
+            if(ball.yPos <= 0) ball.yVelocity *= -1;
+            if(ball.yPos + 50 >= WINDOW_HEIGHT) ball.yVelocity *= -1;
+
+
+            if(ball.xPos <= 0)
+            {
+                ball.xPos = WINDOW_WIDTH/2-10;
+                ball.yPos = WINDOW_WIDTH/2-10;
+            }
+            if(ball.xPos >= WINDOW_WIDTH)
+            {
+                ball.xPos = WINDOW_WIDTH/2-10;
+                ball.yPos = WINDOW_WIDTH/2-10;
+            }
+
+            //stop paddle from leaving the screen
+            if(paddle1.yPos<=0) paddle1.yPos=0;
+			if(paddle1.yPos >= (WINDOW_HEIGHT-100)) paddle1.yPos = WINDOW_HEIGHT - 100;
+			    
+		    if(paddle2.yPos<=0) paddle2.yPos=0;
+			    
+		    if(paddle2.yPos >= (WINDOW_HEIGHT-100)) paddle2.yPos = WINDOW_HEIGHT-100;
         }
 
         void drawWindow()
@@ -125,22 +147,22 @@ class Panel : Frame
             window.create(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pong");
             while(window.isOpen())
             {
+                sleep((milliseconds(1)));
                 //Player Input
-                if(Keyboard::isKeyPressed(Keyboard::W)) paddle1.yPos -= 1;
-                if(Keyboard::isKeyPressed(Keyboard::S)) paddle1.yPos += 1;
+                if(Keyboard::isKeyPressed(Keyboard::W)) paddle1.yPos -= 2;
+                if(Keyboard::isKeyPressed(Keyboard::S)) paddle1.yPos += 2;
 
-                if(Keyboard::isKeyPressed(Keyboard::Up)) paddle2.yPos -= 1;
-                if(Keyboard::isKeyPressed(Keyboard::Down)) paddle2.yPos += 1;
+                if(Keyboard::isKeyPressed(Keyboard::Up)) paddle2.yPos -= 2;
+                if(Keyboard::isKeyPressed(Keyboard::Down)) paddle2.yPos += 2;
                 //check for collision
-                checkCollision();
+                
                 //Movement (paddle, ball)
                 move();
                 //update
-                
+                checkCollision();
                 window.clear();
                 
                 // draw everything here...
-                //redraw();
                 redraw();
                 // window.draw(...);
 
@@ -156,20 +178,11 @@ class Panel : Frame
         }
 };
 
-
-class Pong
-{
-    public:
-        Pong()
-        {
-           Frame frame; 
-        }
-};
-
 int main() 
 {
-    Pong pong;
+    Frame frame;
     Panel panel;
+    
 
     panel.drawWindow();
 }
