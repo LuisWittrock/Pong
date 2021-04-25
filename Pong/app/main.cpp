@@ -20,8 +20,8 @@ class Frame
 class Ball : Frame 
 {
     public:
-        int xVelocity;
-        int yVelocity;
+        int xVelocity = 1;
+        int yVelocity = 1;
         int xPos;
         int yPos;
         
@@ -35,8 +35,6 @@ class Ball : Frame
             ballShape.setFillColor(sf::Color(100,250,50));
             ballShape.setRadius(20.f);
             ballShape.setPosition(xPos, yPos);
-            
-            cout << "ball constructor";
         }
 
         CircleShape getBallshape()
@@ -45,7 +43,7 @@ class Ball : Frame
         }
         void move()
         {
-
+            ballShape.setPosition(xPos += xVelocity, yPos += yVelocity);
         }
 
 };
@@ -75,7 +73,7 @@ class Paddle : Frame
 
         void move()
         {
-
+            rectangleShape.setPosition(Vector2f(xPos, yPos));
         }
 };
 
@@ -87,8 +85,13 @@ class Panel : Frame
         Paddle paddle2;
         Panel()
         {
-            paddle1.setPosition(50,50);
-            paddle2.setPosition(100,100);
+            paddle1.setPosition(5,WINDOW_HEIGHT/2-50);
+            paddle1.xPos = 5;
+            paddle1.yPos = WINDOW_HEIGHT/2-50;
+
+            paddle2.setPosition(WINDOW_WIDTH - 15, WINDOW_HEIGHT/2-50); 
+            paddle2.xPos = WINDOW_WIDTH - 15;
+            paddle2.yPos = WINDOW_HEIGHT/2-50;
         }
 
         void redraw()
@@ -109,6 +112,11 @@ class Panel : Frame
         {
             //bounce ball of paddle
             //bounce ball of horizontal edge
+            if(ball.yPos <= 0) ball.yVelocity  *= -1;
+            if(ball.yPos >= WINDOW_HEIGHT - 10) ball.yVelocity  *= -1;
+            if(ball.xPos <= 0) ball.xVelocity *= -1;
+            if(ball.xPos >= WINDOW_WIDTH - 10) ball.xVelocity *= -1;
+            
             //update score if hit vertical edge 
         }
 
@@ -118,7 +126,11 @@ class Panel : Frame
             while(window.isOpen())
             {
                 //Player Input
-                
+                if(Keyboard::isKeyPressed(Keyboard::W)) paddle1.yPos -= 1;
+                if(Keyboard::isKeyPressed(Keyboard::S)) paddle1.yPos += 1;
+
+                if(Keyboard::isKeyPressed(Keyboard::Up)) paddle2.yPos -= 1;
+                if(Keyboard::isKeyPressed(Keyboard::Down)) paddle2.yPos += 1;
                 //check for collision
                 checkCollision();
                 //Movement (paddle, ball)
