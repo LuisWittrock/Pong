@@ -1,5 +1,6 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
+
 using namespace std;
 using namespace sf;
 
@@ -12,7 +13,7 @@ class Frame
         int WINDOW_HEIGHT = 600;
         Frame()
         {
-            window.setFramerateLimit(50);
+            window.setFramerateLimit(30);
         }
 };
 
@@ -28,19 +29,16 @@ class Ball : Frame
 
         Ball()
         {
-            ballShape.setRadius(5000);
             ballShape.setFillColor(sf::Color(100,250,50));
-            drawBall();
+            ballShape.setRadius(20.f);
+            ballShape.setPosition(WINDOW_WIDTH/2-10, WINDOW_HEIGHT/2-10);
+            
+            cout << "ball constructor";
         }
 
-        void drawBall()
+        CircleShape getBallshape()
         {
-            window.clear(Color::Black);
-            // draw everything here...
-            window.draw(ballShape);
-            // end the current frame
-            window.display();
-            
+            return ballShape;
         }
         void move()
         {
@@ -75,9 +73,7 @@ class Panel : Frame
 
         void redraw()
         {
-           paddle1.drawPaddle();
-           paddle2.drawPaddle();
-           ball.drawBall(); 
+           window.draw(ball.getBallshape());
         }
 
         void move()
@@ -100,16 +96,17 @@ class Panel : Frame
             while(window.isOpen())
             {
                 //Player Input
-                ball.drawBall();
+                
                 //check for collision
                 checkCollision();
                 //Movement (paddle, ball)
                 move();
                 //update
                 
-                window.clear(sf::Color::Black);
-                cout << "test";
+                window.clear();
+                
                 // draw everything here...
+                //redraw();
                 redraw();
                 // window.draw(...);
 
