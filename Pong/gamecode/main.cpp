@@ -115,11 +115,11 @@ class Panel : Frame
             //bounce ball of paddle
             if(ball.xPos <= 15 && ball.yPos >= paddle1.yPos - 30 && ball.yPos <= paddle1.yPos + 120) ball.xVelocity *= -1;
 
-            if((ball.xPos +30) >= (WINDOW_WIDTH - 20) && ball.yPos >= paddle2.yPos - 30 && ball.yPos <= paddle2.yPos + 120) ball.xVelocity *= -1; 
+            if((ball.xPos + 35) >= (WINDOW_WIDTH - 20) && ball.yPos >= paddle2.yPos - 30 && ball.yPos <= paddle2.yPos + 120) ball.xVelocity *= -1; 
 
             //bounce ball of horizontal edge
             if(ball.yPos <= 0) ball.yVelocity *= -1;
-            if(ball.yPos + 50 >= WINDOW_HEIGHT) ball.yVelocity *= -1;
+            if(ball.yPos + 40 >= WINDOW_HEIGHT) ball.yVelocity *= -1;
 
 
             if(ball.xPos <= 0)
