@@ -160,6 +160,7 @@ class Panel : Frame
                 move();
                 //update
                 checkCollision();
+                
                 window.clear();
                 
                 // draw everything here...
@@ -182,7 +183,5 @@ int main()
 {
     Frame frame;
     Panel panel;
-    
-
     panel.drawWindow();
 }
