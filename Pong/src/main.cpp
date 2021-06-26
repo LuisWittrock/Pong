@@ -1,5 +1,5 @@
-#include <SFML\Graphics.hpp>
-#include <SFML\System.hpp>
+#include <Graphics.hpp>
+#include <System.hpp>
 #include <iostream>
 
 using namespace std;

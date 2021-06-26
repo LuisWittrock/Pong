@@ -1,3 +1,3 @@
 all:
-	g++ -c gamecode\main.cpp -Isrc\include
-	g++ main.o -o game -Lsrc\lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio 
+	g++ -c src/main.cpp -I/include
+	g++ main.o -o game -L/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio 
