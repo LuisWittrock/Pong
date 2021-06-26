@@ -1,5 +1,5 @@
-#include <Graphics.hpp>
-#include <System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <iostream>
 
 using namespace std;
@@ -147,7 +147,7 @@ class Panel : Frame
             window.create(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pong");
             while(window.isOpen())
             {
-                sleep((milliseconds(1)));
+                sleep((milliseconds(4)));
                 //Player Input
                 if(Keyboard::isKeyPressed(Keyboard::W)) paddle1.yPos -= 2;
                 if(Keyboard::isKeyPressed(Keyboard::S)) paddle1.yPos += 2;
